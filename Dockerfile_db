@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+
+FROM ubuntu:20.04
+
+EXPOSE 3306
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y mysql-server && \
+    service mysql start && \
+    mysql -e "CREATE DATABASE professorDB;" && \
+    mysql -e "USE professorDB; create table professor (id int auto_increment, first_name VARCHAR(50) not null, last_name varchar(50) not null, city varchar(50) not null, address varchar(50) not null, salary DECIMAL(8, 2) not null, constraint professor_pk primary key (id)); INSERT INTO professor(first_name, last_name, city, address, salary) VALUES ('Juan', 'Perez', 'Cochabamba', 'Av. America', 4500.50), ('Mauricio', 'Flores', 'La Paz', 'Av. Argentina', 3400.80);" && \
+    mysql -e "CREATE USER 'professorDB_user'@'%' IDENTIFIED BY 'mysql';" && \
+    mysql -e "GRANT ALL ON professor.* TO 'professorDB_user'@'%';"
+
+RUN sed -i 's/bind-address.*/bind-address = 0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+CMD ["mysqld"]
