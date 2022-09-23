@@ -22,6 +22,6 @@ def view_create_professor():
 def view_update_professor(id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM professor WHERE id=%i" % id)
-    data = cursor.fetchall()
+    data = cursor.fetchone()
     return render_template('update_professor.html', professor=data)
 

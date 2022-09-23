@@ -19,28 +19,21 @@ def get_professors_list():
 
 
 @professor.route('/', methods=['POST'])
-def add_professor():
+def add_and_update_professor():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     data = request.form
-    cursor.execute("INSERT INTO professor (first_name, last_name, city, address, salary) VALUES ('%s', '%s', '%s', '%s', %s)" % 
-                   (data['first_name'], data['last_name'], data['city'], data['address'], data['salary']))
+
+    if 'id' in data:
+        cursor.execute("UPDATE professor SET first_name='%s', last_name='%s', city='%s', address='%s', salary=%f WHERE id=%i" % 
+                   (data['first_name'], data['last_name'], data['city'], data['address'], float(data['salary']), int(data['id'])))
+    else:
+        cursor.execute("INSERT INTO professor (first_name, last_name, city, address, salary) VALUES ('%s', '%s', '%s', '%s', %s)" % 
+                    (data['first_name'], data['last_name'], data['city'], data['address'], data['salary']))
+
     mysql.connection.commit()
     resp = flask.Response(json.dumps({'result': 'ok'}))
     resp.headers['Content-Type'] = 'application/json'
-    return redirect(url_for('.view_list_professor'))
-
-
-@professor.route('/', methods=['PUT'])
-def update_professor():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    data = request.json
-    cursor.execute("UPDATE professor SET first_name='%s', last_name='%s', city='%s', address='%s', salary=%f WHERE id=%i" % 
-                   (data['first_name'], data['last_name'], data['city'], data['address'], data['salary'], data['id']))
-    
-    mysql.connection.commit()
-    resp = flask.Response(json.dumps({'result': 'ok'}))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+    return redirect(url_for('professor_list'))
 
 
 @professor.route('/', methods=['DELETE'])
