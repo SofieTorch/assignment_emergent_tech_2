@@ -11,7 +11,7 @@ services:
       context: .
       dockerfile: Dockerfile_flask
     ports:
-      - 9000:5000
+      - 9000:81
     volumes:
-      - ./web-db/flask_app:/var/www/html
+      - ./web-db/flask_app:/opt/app
     
