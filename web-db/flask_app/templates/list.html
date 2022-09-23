@@ -1,22 +1,84 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
-<ul>
-    {% for professor in professors: %}
-    <p>{{ professor.first_name }}</p>
-    <p>{{ professor.last_name }}</p>
-    <p>{{ professor.city }}</p>
-    <p>{{ professor.address }}</p>
-    <p>{{ professor.salary }}</p>
-    <a href="{{ url_for('view_update_professor', id=professor.id)}}">Modificar</a>
-    <button onclick="delete_professor({{ professor.id }})">Eliminar</button>
-    {% endfor %}
 
-</ul>
+<script>
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
 
-<a href="{{url_for('view_create_professor')}}">
-    <button>Registrar nuevo profesor</button>
-</a>
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+</script>
+<div class="container p-5">
+    <table class="table table-dark table-striped ">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Salary</th>
+                <th>Actions</th>
+
+            </tr>
+        </tbody>
+        {% for professor in professors: %}
+
+        <tr>
+            
+            <td>{{ professor.first_name }}</td>
+            <td>{{ professor.last_name }}</td>
+            <td>{{ professor.city }}</td>
+            <td>{{ professor.address }}</td>
+            <td>{{ professor.salary }}</td>
+            <td>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalAlert">
+                    Delete
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" style="color: rgb(0, 0, 0) ;">Alert!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                               <h1 style="color: rgb(0, 0, 0) ;">Are you sure?</h1> 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" onclick="delete_professor({{professor.id}})">ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-primary" href="{{ url_for('view_update_professor', id=professor.id)}}">Update</a>
+                </input>
+            </td>
+        </tr>
+        {% endfor %}
+        <tfoot>
+
+        </tfoot>
+    </table>
+    <a href="{{url_for('view_create_professor')}}">
+        <button class="btn btn-secondary">Registrar nuevo profesor</button>
+    </a>
+</div>
 
 <script src="{{url_for('static', filename='delete_professor.js')}}"></script>
+
+
+
+
+
+
+
 {% endblock %}
