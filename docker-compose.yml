@@ -1,6 +1,6 @@
 services:
   mysql:
-    hostname: bddProfessor
+    hostname: web-db-service
     build:
       context: .
       dockerfile: Dockerfile_db
