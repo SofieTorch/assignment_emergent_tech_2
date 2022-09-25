@@ -8,7 +8,7 @@ import decimal_encoder as de
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'bddProfessor'
+app.config['MYSQL_HOST'] = 'web-db-service'
 app.config['MYSQL_USER'] = 'professorDB_user'
 app.config['MYSQL_PASSWORD'] = 'mysql'
 app.config['MYSQL_DB'] = 'professorDB'
