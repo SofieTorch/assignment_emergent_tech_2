@@ -3,9 +3,8 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y mysql-server
 service mysql start
-mysql -e "CREATE DATABASE example;"
-mysql -e "USE example; CREATE TABLE student(id int NOT NULL AUTO_INCREMENT, first_name varchar(50), last_name varchar(50), city varchar(50), semester int, PRIMARY KEY(id)); INSERT INTO student(first_name, last_name, city, semester) VALUES ('Juan', 'Perez', 'Cochabamba', 3),('Carlos', 'Lopez', 'La Paz',5);"
-mysql -e "CREATE TABLE professor(id int auto_increment, first_name VARCHAR(50) not null, last_name varchar(50) not null, city varchar(50) not null, address varchar(50) not null, salary DECIMAL(8, 2) not null, constraint professor_pk primary key (id));"
-mysql -e "CREATE USER 'example_user'@'%' IDENTIFIED BY 'mysql';"
-mysql -e "GRANT ALL ON example.* TO 'example_user'@'%';"
+mysql -e "CREATE DATABASE professorDB;"
+mysql -e "USE professorDB; create table professor (id int auto_increment, first_name VARCHAR(50) not null, last_name varchar(50) not null, city varchar(50) not null, address varchar(50) not null, salary DECIMAL(8, 2) not null, constraint professor_pk primary key (id)); INSERT INTO professor(first_name, last_name, city, address, salary) VALUES ('Juan', 'Perez', 'Cochabamba', 'Av. America', 4500.50), ('Mauricio', 'Flores', 'La Paz', 'Av. Argentina', 3400.80);"
+mysql -e "CREATE USER 'professorDB_user'@'%' IDENTIFIED BY 'mysql';"
+mysql -e "GRANT ALL ON professorDB.* TO 'professorDB_user'@'%';"
 sed -i 's/bind-address.*/bind-address = 0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
