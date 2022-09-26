@@ -8,31 +8,28 @@ import decimal_encoder as de
 
 app = Flask(__name__)
 
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'example_user'
-# app.config['MYSQL_PASSWORD'] = 'mysql'
-# app.config['MYSQL_DB'] = 'example'
-# app.config['MYSQL_PORT'] = 3306
-
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Univalle'
+app.config['MYSQL_USER'] = 'example_user'
+app.config['MYSQL_PASSWORD'] = 'mysql'
 app.config['MYSQL_DB'] = 'example'
 app.config['MYSQL_PORT'] = 3306
 
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'Univalle'
+# app.config['MYSQL_DB'] = 'example'
+# app.config['MYSQL_PORT'] = 3306
+
 mysql = MySQL(app)
 
+
 @app.route('/', methods=['GET'])
-def get_index():
-    return render_template('layout.html')
-
-
 @app.route('/professorlist', methods=['GET'])
 def professor_list():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM professor')
     data = cursor.fetchall()
-    return render_template('list.html', professors=data)
+    return render_template('index.html', professors=data)
 
 
 @app.route('/create/professor', methods=['GET'])
@@ -87,42 +84,6 @@ def delete_professor():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     data = request.json
     cursor.execute("DELETE FROM professor WHERE id=%i" % (data['id']))
-    mysql.connection.commit()
-    resp = flask.Response(json.dumps({'result': 'ok'}))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
-
-
-@app.route('/students', methods=['GET'])
-def student_list_json():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM student')
-    data = cursor.fetchall()
-    resp = flask.Response(json.dumps(data))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
-
-
-@app.route('/students', methods=['POST'])
-def student_post_json():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    data = request.json
-    cursor.execute("INSERT INTO student (first_name, last_name, city, semester) VALUES ('%s', '%s', '%s', %i)" % 
-                   (data['first_name'], data['last_name'], data['city'], data['semester']))
-    
-    mysql.connection.commit()
-    resp = flask.Response(json.dumps({'result': 'ok'}))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
-
-
-@app.route('/students', methods=['PUT'])
-def student_put_json():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    data = request.json
-    cursor.execute("UPDATE student SET first_name='%s', last_name='%s', city='%s', semester=%i WHERE id=%i" % 
-                   (data['first_name'], data['last_name'], data['city'], data['semester'], data['id']))
-    
     mysql.connection.commit()
     resp = flask.Response(json.dumps({'result': 'ok'}))
     resp.headers['Content-Type'] = 'application/json'

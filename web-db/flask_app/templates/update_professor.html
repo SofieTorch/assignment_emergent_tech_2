@@ -4,35 +4,35 @@
 
 
 <div class="container">
-    <br>
-    <h1>Register Professor</h1>
-    <br>
-    <form action="/professorsU" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">First Name</label>
-        <input type="text" value="{{ professor.first_name }}" class="form-control" id="first_name" name="first_name" >
-      </div>
-      <div class="mb-3">
-        <label for="name" class="form-label">Last Name</label>
-        <input type="text" value="{{ professor.last_name }}" class="form-control" id="last_name" name="last_name">
-      </div>
-      <div class="mb-3">
-        <label for="city" class="form-label">City</label>
-        <input type="text" value="{{ professor.city }}" class="form-control" id="city" name="city" >
-      </div>
-      <div class="mb-3">
-        <label for="address" class="form-label">Address</label>
-        <input type="text" class="form-control" value="{{ professor.address }}" id="address" name="address">
-      </div>
-      <div class="mb-3">
-        <label for="salary" class="form-label">Salary</label>
-        <input type="text" class="form-control" id="salary" value="{{ professor.salary }}" name="salary">
-      </div>
-      <input type="text" value="{{ professor.id }}" id="id" name="id" hidden="true">
-      
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-    
-  
-  {% endblock %}
+  <br>
+  <h1>Edit Professor</h1>
+  <br>
+  <form action="/professorsU" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">First Name</label>
+      <input type="text" value="{{ professor.first_name }}" class="form-control" id="first_name" name="first_name">
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Last Name</label>
+      <input type="text" value="{{ professor.last_name }}" class="form-control" id="last_name" name="last_name">
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" value="{{ professor.city }}" class="form-control" id="city" name="city">
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" value="{{ professor.address }}" id="address" name="address">
+    </div>
+    <div class="mb-3">
+      <label for="salary" class="form-label">Salary</label>
+      <input type="text" class="form-control" id="salary" value="{{ professor.salary }}" name="salary">
+    </div>
+    <input type="text" value="{{ professor.id }}" id="id" name="id" hidden="true">
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+{% endblock %}
