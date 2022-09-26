@@ -1,6 +1,7 @@
 #!/bin/bash
 apt-get update
 apt-get install -y python3-pip
+apt-get install -y libmysqlclient-dev
 cd /opt
 mkdir app
 cd app
