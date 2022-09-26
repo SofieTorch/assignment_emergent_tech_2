@@ -1,0 +1,17 @@
+services:
+  mysql:
+    hostname: bddProfessor
+    build:
+      context: .
+      dockerfile: Dockerfile_db
+    ports:
+      - 7306:3306
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile_flask
+    ports:
+      - 9000:81
+    volumes:
+      - ./web-db/flask_app:/opt/app
+    
